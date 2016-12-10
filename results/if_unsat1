@@ -1,0 +1,62 @@
+afzal@afzal-350V5C-351V5C-3540VC-3440VC:~/Documents/Study material/Msc CS/SMT/major_Project/sp_z3_new/src/check_wp$ /usr/bin/time -v ./check_wp ../../tests/if_unsat1.c 
+file ../../tests/if_unsat1.c: Parsing
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking if_unsat1
+SP in assume is TRUE && x < 10
+Equel exp is y == 1
+sp in one step is exists { irep("(\"bv\")") t4; y == 1 && x < 10 && x == 3 }
+before else sp is !(x == 3) && x < 10
+Equel exp is y == 1
+sp in one step is exists { irep("(\"bv\")") t6; y == 1 && !(x == 3) && x < 10 }
+Equel exp is x == 4 * y
+sp in one step is exists { irep("(\"bv\")") t8; x == 4 * y && y == 10 && (exists { irep("(\"bv\")") t6; t8 < 10 && y == 1 && !(t8 == 3) }) }
+before else sp is !(y == 10) && (exists { irep("(\"bv\")") t6; x < 10 && y == 1 && !(x == 3) })
+Equel exp is x == 20
+sp in one step is exists { irep("(\"bv\")") t10; x == 20 && !(y == 10) && (exists { irep("(\"bv\")") t6; t10 < 10 && y == 1 && !(t10 == 3) }) }
+Strongest postcondition is (exists { irep("(\"bv\")") t8; x == 4 * y && y == 10 && (exists { irep("(\"bv\")") t6; t8 < 10 && y == 1 && !(t8 == 3) }) }) || (exists { irep("(\"bv\")") t10; x == 20 && (exists { irep("(\"bv\")") t6; t10 < 10 && y == 1 && !(t10 == 3) }) && !(y == 10) })
+Assert is x == 20
+Final sp is (exists { irep("(\"bv\")") t8; x == 4 * y && y == 10 && (exists { irep("(\"bv\")") t6; t8 < 10 && y == 1 && !(t8 == 3) }) }) || (exists { irep("(\"bv\")") t10; x == 20 && (exists { irep("(\"bv\")") t6; t10 < 10 && y == 1 && !(t10 == 3) }) && !(y == 10) }) ==> x == 20
+
+wp expression after cbmc phase: !((exists { irep("(\"bv\")") t8; x == 4 * y && y == 10 && (exists { irep("(\"bv\")") t6; t8 < 10 && y == 1 && !(t8 == 3) }) }) || (exists { irep("(\"bv\")") t10; x == 20 && (exists { irep("(\"bv\")") t6; t10 < 10 && y == 1 && !(t10 == 3) }) && !(y == 10) }) ==> x == 20)
+wp expression after converting to z3: (let ((a!1 (exists ((t8 (_ BitVec 32)))
+             (let ((a!1 (exists ((t6 (_ BitVec 32)))
+                          (and (bvslt t8 #x0000000a)
+                               (= y #x00000001)
+                               (not (= t8 #x00000003))))))
+               (and (= x (bvmul #x00000004 y)) (= y #x0000000a) a!1))))
+      (a!2 (exists ((t10 (_ BitVec 32)))
+             (let ((a!1 (exists ((t6 (_ BitVec 32)))
+                          (and (bvslt t10 #x0000000a)
+                               (= y #x00000001)
+                               (not (= t10 #x00000003))))))
+               (and (= x #x00000014) a!1 (not (= y #x0000000a)))))))
+  (not (=> (or a!1 a!2) (= x #x00000014))))
+UNSAT core: (ast-vector
+  ans_lit)
+No assumptions were found. Program is safe.
+VERIFICATION SUCCESSFUL
+	Command being timed: "./check_wp ../../tests/if_unsat1.c"
+	User time (seconds): 0.10
+	System time (seconds): 0.02
+	Percent of CPU this job got: 93%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.14
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 32688
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5279
+	Voluntary context switches: 9
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

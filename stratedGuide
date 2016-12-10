@@ -1,0 +1,33 @@
+Installation instructions:
+
+You need to first download and compile CBMC 4.5 and Z3. 
+
+To install CBMC:
+CBMC 4.5 is available here: https://codeload.github.com/diffblue/cbmc/tar.gz/cbmc-4.5
+You need to download and untar it.
+Then execute following commands:
+cd src
+make minisat2-download
+
+You can refer  "COMPILING" file for dependencies of CBMC (it requires XCode command-line utilities which is available at https://developer.apple.com/downloads/ as per "COMPILING" file).
+
+To install Z3:
+Download Z3 source available here: https://github.com/Z3Prover/z3
+Unzip it and execute following commands:
+python scripts/mk_make.py
+cd build
+make
+
+
+Note that you need not install compiled binaries (i.e. command "make install") as we will link directly from above directories.
+
+Once above two tools are built download our source code, unzip it and enter into src/ directory. 
+Now edit config.inc file present in src/ directory and change the variables "CBMC" and "Z3" to point to above created CBMC and Z3 directories respectively.
+After this run the command make.
+If make command was successful a binary with name "check_wp" will be built in check_wp/ directory. 
+
+To test any program pass the program to check_wp binary. For example, if I want to run if_sat1.c program then I will execute command "./check_wp ../../tests/if_sat1.c" within check_wp/ directory. (Since if_sat1.c is present in tests/ directory two level directory up I am passing ../../tests/if_sat1.c to check_wp).
+
+All the test program are present in tests/ directory present in top level.
+
+Let me know if you need any more information.

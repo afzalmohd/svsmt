@@ -1,0 +1,17 @@
+file sat2.c: Parsing
+Converting
+Type-checking sat2
+Weakest precondition is !((x + y) * 2 + x + y == 45) || !((x + y + y) * 2 + x + y + y == 60)
+Assumption is x < 10 && y > 5
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(declare-fun |c::main::1::y| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (and (bvslt |c::main::1::x| (_ bv10 32)) (bvsgt |c::main::1::y| (_ bv5 32))) (or (not (= (bvadd (bvmul (bvadd |c::main::1::x| |c::main::1::y|) (_ bv2 32)) |c::main::1::x| |c::main::1::y|) (_ bv45 32))) (not (= (bvadd (bvmul (bvadd |c::main::1::x| |c::main::1::y| |c::main::1::y|) (_ bv2 32)) |c::main::1::x| |c::main::1::y| |c::main::1::y|) (_ bv60 32))))))
+(assert B0)
+(check-sat)
+(get-model)

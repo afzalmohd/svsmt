@@ -1,0 +1,91 @@
+afzal@afzal-350V5C-351V5C-3540VC-3440VC:~/Documents/Study material/Msc CS/SMT/major_Project/sp_z3_new/src/check_wp$ /usr/bin/time -v ./check_wp ../../tests/sat2.c 
+file ../../tests/sat2.c: Parsing
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking sat2
+SP in assume is TRUE && x < (unsigned int)10 && y > (unsigned int)5
+Equel exp is x == t3 + y
+sp in one step is exists { irep("(\"bv\")") t3; x == t3 + y && t3 < 10u && y > 5u }
+Equel exp is y == t4 + x
+sp in one step is exists { irep("(\"bv\")") t4; y == t4 + x && (exists { irep("(\"bv\")") t3; t3 < 10u && x == t3 + t4 && t4 > 5u }) }
+Equel exp is x == t5 + (unsigned int)2 * t5
+sp in one step is exists { irep("(\"bv\")") t5; x == t5 + (unsigned int)2 * t5 && (exists { irep("(\"bv\")") t4; y == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 10u && t5 == t3 + t4 && t4 > 5u }) }) }
+Equel exp is y == t6 + (unsigned int)2 * t6
+sp in one step is exists { irep("(\"bv\")") t6; y == t6 + (unsigned int)2 * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2u * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 10u && t5 == t3 + t4 && t4 > 5u }) }) }) }
+Strongest postcondition is exists { irep("(\"bv\")") t6; y == t6 + 2u * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2u * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 10u && t5 == t3 + t4 && t4 > 5u }) }) }) }
+Assert is x == (unsigned int)45 && y == (unsigned int)60
+Final sp is (exists { irep("(\"bv\")") t6; y == t6 + 2u * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2u * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 10u && t5 == t3 + t4 && t4 > 5u }) }) }) }) ==> x == (unsigned int)45 && y == (unsigned int)60
+
+wp expression after cbmc phase: !((exists { irep("(\"bv\")") t6; y == t6 + 2u * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2u * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 10u && t5 == t3 + t4 && t4 > 5u }) }) }) }) ==> x == (unsigned int)45 && y == (unsigned int)60)
+wp expression after converting to z3: (let ((a!1 (exists ((t6 (_ BitVec 32)))
+             (let ((a!1 (exists ((t5 (_ BitVec 32)))
+                          (let ((a!1 (exists ((t4 (_ BitVec 32)))
+                                       (let ((a!1 (exists ((t3 (_ BitVec 32)))
+                                                    (and (bvult t3 #x0000000a)
+                                                         (= t5 (bvadd t3 t4))
+                                                         (bvugt t4 #x00000005)))))
+                                         (and (= t6 (bvadd t4 t5)) a!1)))))
+                            (and (= x (bvadd t5 (bvmul #x00000002 t5))) a!1)))))
+               (and (= y (bvadd t6 (bvmul #x00000002 t6))) a!1)))))
+  (not (=> a!1 (and (= x #x0000002d) (= y #x0000003c)))))
+SAT! Model: 
+(define-fun t5 () (_ BitVec 32)
+  #xfffffff0)
+(define-fun y () (_ BitVec 32)
+  #xfffffff0)
+(define-fun t5!1 () (_ BitVec 32)
+  #xaaaaaaaa)
+(define-fun t4 () (_ BitVec 32)
+  #xfffffff0)
+(define-fun ans_lit () Bool
+  true)
+(define-fun t6 () (_ BitVec 32)
+  #xfffffff0)
+(define-fun t54 () Bool
+  true)
+(define-fun t44 () Bool
+  true)
+(define-fun t34 () Bool
+  true)
+(define-fun t64 () Bool
+  true)
+(define-fun t6!0 () (_ BitVec 32)
+  #x55555550)
+(define-fun t3!3 () (_ BitVec 32)
+  #x00000004)
+(define-fun t4!2 () (_ BitVec 32)
+  #xaaaaaaa6)
+(define-fun y4 () Bool
+  true)
+(define-fun x4 () Bool
+  true)
+(define-fun x () (_ BitVec 32)
+  #xfffffffe)
+(define-fun t3 () (_ BitVec 32)
+  #xfffffff0)
+VERIFICATION FAILED
+Command exited with non-zero status 10
+	Command being timed: "./check_wp ../../tests/sat2.c"
+	User time (seconds): 0.14
+	System time (seconds): 0.00
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.15
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 33196
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5387
+	Voluntary context switches: 9
+	Involuntary context switches: 9
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 10

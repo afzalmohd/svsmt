@@ -1,0 +1,16 @@
+file if_sat3.c: Parsing
+Converting
+Type-checking if_sat3
+Weakest precondition is 1 + x < 10 && !(x < 5) || 1 + x + x < 10 && x < 5
+Assumption is x < 10
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (bvslt |c::main::1::x| (_ bv10 32)) (or (and (bvslt (bvadd (_ bv1 32) |c::main::1::x|) (_ bv10 32)) (not (bvslt |c::main::1::x| (_ bv5 32)))) (and (bvslt (bvadd (_ bv1 32) |c::main::1::x| |c::main::1::x|) (_ bv10 32)) (bvslt |c::main::1::x| (_ bv5 32))))))
+(assert B0)
+(check-sat)
+(get-model)

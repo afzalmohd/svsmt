@@ -1,0 +1,17 @@
+file if_sat2.c: Parsing
+Converting
+Type-checking if_sat2
+Weakest precondition is x == 5u && !(x + y > 0u) || !(x == 5u) && !(y + -x > 0u)
+Assumption is x < (unsigned int)10 && y > (unsigned int)5
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(declare-fun |c::main::1::y| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (and (bvult |c::main::1::x| (_ bv10 32)) (bvugt |c::main::1::y| (_ bv5 32))) (or (and (= |c::main::1::x| (_ bv5 32)) (not (bvugt (bvadd |c::main::1::x| |c::main::1::y|) (_ bv0 32)))) (and (not (= |c::main::1::x| (_ bv5 32))) (not (bvugt (bvadd |c::main::1::y| (bvneg |c::main::1::x|)) (_ bv0 32)))))))
+(assert B0)
+(check-sat)
+(get-model)

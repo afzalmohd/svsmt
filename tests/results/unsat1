@@ -1,0 +1,17 @@
+file unsat1.c: Parsing
+Converting
+Type-checking unsat1
+Weakest precondition is !((x * y + x * y * y) * 2u < 2200u)
+Assumption is x < (unsigned int)10 && y < (unsigned int)10
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(declare-fun |c::main::1::y| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (and (bvult |c::main::1::x| (_ bv10 32)) (bvult |c::main::1::y| (_ bv10 32))) (not (bvult (bvmul (bvadd (bvmul |c::main::1::x| |c::main::1::y|) (bvmul (bvmul |c::main::1::x| |c::main::1::y|) |c::main::1::y|)) (_ bv2 32)) (_ bv2200 32)))))
+(assert B0)
+(check-sat)
+(get-model)

@@ -1,0 +1,17 @@
+file if_unsat2.c: Parsing
+Converting
+Type-checking if_unsat2
+Weakest precondition is x < 5 && !(1 + x < 6) && !(1 + x > 11) || !(1 + y < 6) && !(x < 5) && !(1 + y > 11)
+Assumption is x < 10 && y > 10
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(declare-fun |c::main::1::y| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (and (bvslt |c::main::1::x| (_ bv10 32)) (bvsgt |c::main::1::y| (_ bv10 32))) (or (and (bvslt |c::main::1::x| (_ bv5 32)) (not (bvslt (bvadd (_ bv1 32) |c::main::1::x|) (_ bv6 32))) (not (bvsgt (bvadd (_ bv1 32) |c::main::1::x|) (_ bv11 32)))) (and (not (bvslt (bvadd (_ bv1 32) |c::main::1::y|) (_ bv6 32))) (not (bvslt |c::main::1::x| (_ bv5 32))) (not (bvsgt (bvadd (_ bv1 32) |c::main::1::y|) (_ bv11 32)))))))
+(assert B0)
+(check-sat)
+(get-model)

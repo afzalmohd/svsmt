@@ -1,0 +1,14 @@
+file float.c: Parsing
+Converting
+Type-checking float
+Weakest precondition is !IEEE_FLOAT_EQUAL(x + y + 2.000000f * (x + y), 18.000000f) || !IEEE_FLOAT_EQUAL(y + x + y + 2.000000f * (y + x + y), 36.000000f)
+Assumption is (double)x < 10.500000 && (double)y > 5.200000
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(declare-fun |c::main::1::y| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (and (bvslt 

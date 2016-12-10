@@ -1,0 +1,82 @@
+afzal@afzal-350V5C-351V5C-3540VC-3440VC:~/Documents/Study material/Msc CS/SMT/major_Project/sp_z3_new/src/check_wp$ /usr/bin/time -v ./check_wp ../../tests/swap.c 
+file ../../tests/swap.c: Parsing
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking swap
+SP in assume is TRUE && x == 6 && y == 5
+Equel exp is z == x
+sp in one step is exists { irep("(\"bv\")") t4; z == x && x == 6 && y == 5 }
+Equel exp is x == y
+sp in one step is exists { irep("(\"bv\")") t5; x == y && (exists { irep("(\"bv\")") t4; t5 == 6 && y == 5 && z == t5 }) }
+Equel exp is y == z
+sp in one step is exists { irep("(\"bv\")") t6; y == z && (exists { irep("(\"bv\")") t5; x == t6 && (exists { irep("(\"bv\")") t4; t5 == 6 && t6 == 5 && z == t5 }) }) }
+Strongest postcondition is exists { irep("(\"bv\")") t6; y == z && (exists { irep("(\"bv\")") t5; x == t6 && (exists { irep("(\"bv\")") t4; t5 == 6 && t6 == 5 && z == t5 }) }) }
+Assert is x == 5 && y == 6
+Final sp is (exists { irep("(\"bv\")") t6; y == z && (exists { irep("(\"bv\")") t5; x == t6 && (exists { irep("(\"bv\")") t4; t5 == 6 && t6 == 5 && z == t5 }) }) }) ==> x == 5 && y == 6
+
+wp expression after cbmc phase: !((exists { irep("(\"bv\")") t6; y == z && (exists { irep("(\"bv\")") t5; x == t6 && (exists { irep("(\"bv\")") t4; t5 == 6 && t6 == 5 && z == t5 }) }) }) ==> x == 5 && y == 6)
+wp expression after converting to z3: (let ((a!1 (=> (exists ((t6 (_ BitVec 32)))
+                 (let ((a!1 (exists ((t5 (_ BitVec 32)))
+                              (and (= x t6)
+                                   (exists ((t4 (_ BitVec 32)))
+                                     (and (= t5 #x00000006)
+                                          (= t6 #x00000005)
+                                          (= z t5)))))))
+                   (and (= y z) a!1)))
+               (and (= x #x00000005) (= y #x00000006)))))
+  (not a!1))
+UNSAT core: (ast-vector
+  ans_lit
+  z4)
+UNSAT core: (ast-vector
+  ans_lit
+  z8)
+UNSAT core: (ast-vector
+  ans_lit
+  z16)
+UNSAT core: (ast-vector
+  ans_lit
+  x4)
+UNSAT core: (ast-vector
+  ans_lit
+  x8)
+UNSAT core: (ast-vector
+  ans_lit
+  x16)
+UNSAT core: (ast-vector
+  ans_lit
+  y4)
+UNSAT core: (ast-vector
+  ans_lit
+  y8)
+UNSAT core: (ast-vector
+  ans_lit
+  y16)
+UNSAT core: (ast-vector
+  ans_lit)
+No assumptions were found. Program is safe.
+VERIFICATION SUCCESSFUL
+	Command being timed: "./check_wp ../../tests/swap.c"
+	User time (seconds): 0.13
+	System time (seconds): 0.01
+	Percent of CPU this job got: 77%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.19
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 32812
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5252
+	Voluntary context switches: 10
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 8
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

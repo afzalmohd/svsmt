@@ -1,0 +1,16 @@
+file if_unsat1.c: Parsing
+Converting
+Type-checking if_unsat1
+Weakest precondition is FALSE
+Assumption is x < 10
+; SMT 2
+(set-info :source "")
+(set-option :produce-models true)
+(set-logic QF_BV)
+
+(declare-fun |c::main::1::x| () (_ BitVec 32))
+(define-fun B0 () Bool ; convert 
+ (and (bvslt |c::main::1::x| (_ bv10 32)) false))
+(assert B0)
+(check-sat)
+(get-model)

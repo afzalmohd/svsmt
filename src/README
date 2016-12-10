@@ -1,0 +1,48 @@
+The makefiles of this program is from Impara 0.2, whose original README is retained below. 
+
+You can follow same instructions as mentioned below to compile this program though I have tried only on Linux.
+
+The cbmc used is version 4.5 and the name of executable generated after compilation is "check_wp".
+
+=============================================================================================================== 
+  __   _  _  ____   __   ____   __          __         ____ 
+ (  ) ( \/ )(  _ \ / _\ (  _ \ / _\        /  \       (___ \
+  )(  / \/ \ ) __//    \ )   //    \      (  0 )  _    / __/
+ (__) \_)(_/(__)  \_/\_/(__\_)\_/\_/       \__/  (_)  (____)
+
+
+
+Impara is a software model checker for C programs
+with POSIX and WIN 32 threads.
+The techniques behind Impara are described in the following paper:
+
+Bjorn Wachter, Daniel Kroening, Joel Ouaknine,
+"Verifying Multi-threaded Software with Impact",
+13th Conference in Formal Methods in Computer Aided Design,
+Portland, Oregon, US, October 2013.
+
+
+
+
+Instructions on how to compile Impara
+-------------------------------------
+
+IMPARA compiles in the following environments:
+
+- Linux
+
+- MacOS X
+
+COMPILING
+---------
+
+Impara relies on 
+
+1. Download CBMC 4.4 and build it following the instructions for CBMC.
+
+2. Modify file "config.inc" to include the path where CBMC can be found.
+
+3. enter directory src/impara and type "make".
+
+4. if successful, you will find the "impara" executable in "src/impara".
+

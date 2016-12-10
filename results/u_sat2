@@ -1,0 +1,105 @@
+afzal@afzal-350V5C-351V5C-3540VC-3440VC:~/Documents/Study material/Msc CS/SMT/major_Project/sp_z3_new/src/check_wp$ /usr/bin/time -v ./check_wp ../../tests/u_sat2.c 
+file ../../tests/u_sat2.c: Parsing
+file <command-line> line 0: <command-line>:0:0: warning: "__STDC_VERSION__" redefined
+file <command-line> line 0: <built-in>: note: this is the location of the previous definition
+Converting
+Type-checking u_sat2
+SP in assume is TRUE && x < 128
+Equel exp is x == t3 + y
+sp in one step is exists { irep("(\"bv\")") t3; x == t3 + y && t3 < 128 }
+Equel exp is y == t4 + x
+sp in one step is exists { irep("(\"bv\")") t4; y == t4 + x && (exists { irep("(\"bv\")") t3; t3 < 128 && x == t3 + t4 }) }
+Equel exp is x == t5 + 2 * t5
+sp in one step is exists { irep("(\"bv\")") t5; x == t5 + 2 * t5 && (exists { irep("(\"bv\")") t4; y == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 128 && t5 == t3 + t4 }) }) }
+Equel exp is y == t6 + 2 * t6
+sp in one step is exists { irep("(\"bv\")") t6; y == t6 + 2 * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2 * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 128 && t5 == t3 + t4 }) }) }) }
+Strongest postcondition is exists { irep("(\"bv\")") t6; y == t6 + 2 * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2 * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 128 && t5 == t3 + t4 }) }) }) }
+Assert is x < 1024
+Final sp is (exists { irep("(\"bv\")") t6; y == t6 + 2 * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2 * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 128 && t5 == t3 + t4 }) }) }) }) ==> x < 1024
+
+wp expression after cbmc phase: !((exists { irep("(\"bv\")") t6; y == t6 + 2 * t6 && (exists { irep("(\"bv\")") t5; x == t5 + 2 * t5 && (exists { irep("(\"bv\")") t4; t6 == t4 + t5 && (exists { irep("(\"bv\")") t3; t3 < 128 && t5 == t3 + t4 }) }) }) }) ==> x < 1024)
+wp expression after converting to z3: (let ((a!1 (exists ((t6 (_ BitVec 32)))
+             (let ((a!1 (exists ((t5 (_ BitVec 32)))
+                          (let ((a!1 (exists ((t4 (_ BitVec 32)))
+                                       (let ((a!1 (exists ((t3 (_ BitVec 32)))
+                                                    (and (bvslt t3 #x00000080)
+                                                         (= t5 (bvadd t3 t4))))))
+                                         (and (= t6 (bvadd t4 t5)) a!1)))))
+                            (and (= x (bvadd t5 (bvmul #x00000002 t5))) a!1)))))
+               (and (= y (bvadd t6 (bvmul #x00000002 t6))) a!1)))))
+  (not (=> a!1 (bvslt x #x00000400))))
+UNSAT core: (ast-vector
+  ans_lit
+  x4)
+UNSAT core: (ast-vector
+  ans_lit
+  x8)
+UNSAT core: (ast-vector
+  ans_lit
+  x16)
+SAT! Model: 
+(define-fun t5 () (_ BitVec 32)
+  #xfffffff0)
+(define-fun y () (_ BitVec 32)
+  #xffffffff)
+(define-fun x16 () Bool
+  false)
+(define-fun t5!1 () (_ BitVec 32)
+  #x6aaaaae6)
+(define-fun t4 () (_ BitVec 32)
+  #xfffffff0)
+(define-fun x8 () Bool
+  false)
+(define-fun ans_lit () Bool
+  true)
+(define-fun t6 () (_ BitVec 32)
+  #xfffffff0)
+(define-fun t54 () Bool
+  true)
+(define-fun t44 () Bool
+  true)
+(define-fun t34 () Bool
+  true)
+(define-fun t64 () Bool
+  true)
+(define-fun t6!0 () (_ BitVec 32)
+  #x55555555)
+(define-fun t3!3 () (_ BitVec 32)
+  #x80000077)
+(define-fun t4!2 () (_ BitVec 32)
+  #xeaaaaa6f)
+(define-fun y4 () Bool
+  true)
+(define-fun x4 () Bool
+  false)
+(define-fun x () (_ BitVec 32)
+  #x400000b2)
+(define-fun x32 () Bool
+  true)
+(define-fun t3 () (_ BitVec 32)
+  #xfffffff0)
+VERIFICATION FAILED
+Command exited with non-zero status 10
+	Command being timed: "./check_wp ../../tests/u_sat2.c"
+	User time (seconds): 0.12
+	System time (seconds): 0.01
+	Percent of CPU this job got: 78%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 33192
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 5385
+	Voluntary context switches: 10
+	Involuntary context switches: 4
+	Swaps: 0
+	File system inputs: 8
+	File system outputs: 8
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 10
